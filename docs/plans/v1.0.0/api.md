@@ -42,7 +42,7 @@ export type HolidayList = Holiday[]
 - `year` は整数の西暦
 - 対象年にオーバーライドがあればそれを返す（演算しない）
 - なければ演算して返す
-- 対象開始年より前の年の扱いは [open-questions.md](open-questions.md) U-02 / D-15 決定: **エラーにせず警告を出し、空配列（祝日なし）を返す**
+- 対象開始年より前の年の扱いは [open-questions.md](open-questions.md) U-02 / D-15 および N-H1 決定: **エラーにせず空配列（祝日なし）を返す**。警告は第 2 引数 `options.onWarning?` に届ける（未指定時は何もしない）
 
 ### `getHolidaysOfMonth(year: number, month: number): HolidayList`
 
@@ -68,9 +68,13 @@ export type HolidayList = Holiday[]
 | 存在しない暦日（例: `2025-02-30`） | 同上 |
 | `month` が 1–12 外 | 同上 |
 | `year` が整数でない | 同上 |
-| `year` が対象開始年（1948）より前 | **エラーにしない。** 警告を出し、空の結果（祝日なし）を返す（U-02 / D-15） |
+| `year` が対象開始年（1948）より前 | **エラーにしない。** 空配列を返す。警告は `options.onWarning?` へ（N-H1 / U-02 / D-15） |
 
-警告の出し方（例: 戻り値に `warnings`、または診断コールバック）は実装時に確定する。呼び出し側が範囲外に気づけることと、処理が止まらないことを両立する。
+```ts
+options?: { onWarning?: (w: { code: 'YEAR_BEFORE_MIN'; year: number; message: string }) => void }
+```
+
+`onWarning` 未指定時は警告を出さず空配列のみ（既存の 1 引数呼び出しを壊さない）。
 
 ランタイムのネットワークエラーは公開 API に出ない。
 
@@ -91,7 +95,7 @@ export type HolidayList = Holiday[]
 
 - 正常系: 既知の年・月・日で期待一覧 / 1 件 / true|false
 - 異常系: 不正日付、範囲外 month
-- 境界: 1948 年より前（警告＋空結果）、うるう日を含む年、年末年始、GW（橋渡し休日）
+- 境界: 1948 年より前（空結果＋任意の onWarning）、うるう日を含む年、年末年始、GW（橋渡し休日）
 
 詳細のテスト仕様書は実装着手時に `docs/tests/` へ書く（憲章 TDD）。
 

@@ -16,7 +16,7 @@ timestamp: 2026-10-20
 
 - [api.md](../v1.0.0/api.md) の関数群
 - [japan-holidays.md](../v1.0.0/japan-holidays.md) の演算（振替・国民の休日・春分秋分の振替含む）
-- 1948 年未満: 警告＋空結果（エラーにしない）
+- 1948 年未満: 空配列＋`options.onWarning?`（未指定時は空のみ。N-H1）。エラーにしない
 - 外部日付ライブラリなし
 
 ## 受け入れ条件
@@ -31,6 +31,12 @@ timestamp: 2026-10-20
 - **参照実装:** `kohki/shikata-kohki-life` の `src/utils/holiday/`
 - CSV オーバーライド本格運用は v0.3.0（本版では演算のみでも可）
 
+## 詳細
+
+- 実装計画: [implementation-plan.md](implementation-plan.md)
+- テスト仕様: [../../tests/v0.2.0/](../../tests/v0.2.0/)
+
 ----
 
 以上
+
