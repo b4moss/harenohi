@@ -1,0 +1,104 @@
+# 政府 CSV を取得し override を更新する PR を作成する（main 直書きしない = D-18）
+name: fetch-holiday-csv
+
+on:
+  schedule:
+    # 毎年 2月1日 00:00 UTC（来年分公表後の手動実行を主とし、保険のスケジュール）
+    - cron: '0 0 1 2 *'
+  workflow_dispatch: {}
+
+jobs:
+  fetch-and-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Fetch government CSV
+        run: node scripts/fetch-jp-holiday-csv.mjs
+
+      - name: Parse CSV into override JSON
+        run: node scripts/parse-jp-holiday-csv.mjs
+
+      - name: Detect changes
+        id: diff
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- src/data/jp-holiday; then
+            echo "changed=false" >>"$GITHUB_OUTPUT"
+            echo "No holiday data changes."
+          else
+            echo "changed=true" >>"$GITHUB_OUTPUT"
+            git status --short -- src/data/jp-holiday
+          fi
+
+      - name: Create branch, commit, push, open PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+          SERVER_URL: ${{ github.server_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${GITEA_TOKEN:-}" ]]; then
+            echo "GITEA_TOKEN secret is required to open a PR" >&2
+            exit 1
+          fi
+          STAMP="$(date -u +%Y%m%d)"
+          BRANCH="chore/jp-holiday-csv-${STAMP}"
+          export BRANCH
+          git config user.name "harenohi-bot"
+          git config user.email "harenohi-bot@noreply.localhost"
+          git checkout -B "${BRANCH}"
+          git add src/data/jp-holiday
+          git commit -m "chore: update jp holiday CSV overrides (${STAMP})"
+          # Push feature branch only — never main
+          HOST="${SERVER_URL#https://}"
+          git push -u "https://oauth2:${GITEA_TOKEN}@${HOST}/${REPO}.git" "HEAD:refs/heads/${BRANCH}"
+
+          python3 - <<'PY'
+          import json, os, urllib.error, urllib.request
+
+          branch = os.environ["BRANCH"]
+          payload = json.dumps({
+              "title": f"chore: update jp holiday overrides ({branch})",
+              "head": branch,
+              "base": "main",
+              "body": "政府公開 CSV から生成した override 更新です。内容を確認のうえマージしてください（D-18）。",
+          }).encode()
+          req = urllib.request.Request(
+              f"{os.environ['SERVER_URL']}/api/v1/repos/{os.environ['REPO']}/pulls",
+              data=payload,
+              headers={
+                  "Authorization": f"token {os.environ['GITEA_TOKEN']}",
+                  "Content-Type": "application/json",
+              },
+              method="POST",
+          )
+          try:
+              with urllib.request.urlopen(req) as res:
+                  print("PR create HTTP", res.status)
+                  print(res.read().decode()[:500])
+          except urllib.error.HTTPError as e:
+              body = e.read().decode()
+              if e.code == 409:
+                  print("PR already exists (409)")
+                  print(body[:500])
+              else:
+                  print("PR create failed", e.code, body[:1000])
+                  raise
+          PY
