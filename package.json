@@ -1,0 +1,41 @@
+{
+  "name": "@b4m/harenohi",
+  "version": "0.1.0",
+  "description": "祝日演算ライブラリ（当面は日本の祝日）",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "registry": "https://git.b4m.jp/api/packages/b4m-packages/npm/"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "holiday",
+    "japan",
+    "calendar"
+  ],
+  "license": "UNLICENSED",
+  "private": false,
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
