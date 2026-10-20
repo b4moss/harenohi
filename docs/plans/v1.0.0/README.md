@@ -37,6 +37,10 @@ timestamp: 2026-10-19
 
 切り出し時は依存（例: Day.js）を本パッケージ方針（[open-questions.md](open-questions.md) U-03）に合わせて整理する。
 
+## 依存する先行版
+
+- v0.1.0（スキャフォールド）→ v0.2.0（演算）→ v0.3.0（CSV / Actions）が揃っていること
+
 ## 公開方針（v1）
 
 - パッケージ名: `@b4m/harenohi`（社内 Gitea レジストリ。公開時に `@b4moss/harenohi` へ移す。U-01 決定済み）
