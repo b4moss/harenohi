@@ -53,7 +53,7 @@ timestamp: 2026-10-20
 | 項目 | 内容 |
 |------|------|
 | **目的** | `shikata-kohki-life` から演算を移植し、公開 API の骨格を動かす |
-| **含む機能** | `getHolidaysOfYear` / `OfMonth` / `getHoliday` / `isHoliday`。振替・国民の休日。春分秋分も振替対象。1948 未満は警告＋空 |
+| **含む機能** | `getHolidaysOfYear` / `OfMonth` / `getHoliday` / `isHoliday`。振替・国民の休日。春分秋分も振替対象。1948 未満は空配列＋`options.onWarning?`（N-H1） |
 | **受け入れ** | [api.md](plans/v1.0.0/api.md) / [japan-holidays.md](plans/v1.0.0/japan-holidays.md) の単体テストが主要ケースで緑。外部日付ライブラリなし |
 | **依存** | v0.1.0 |
 | **詳細** | [plans/v0.2.0/](plans/v0.2.0/) |
@@ -85,7 +85,7 @@ timestamp: 2026-10-20
 | 議題 | 状態 | 正本 |
 |------|------|------|
 | npm スコープ・公開時期 | **決定**（2026-10-20） | [open-questions.md](plans/v1.0.0/open-questions.md) |
-| 開始年 1948・範囲外は警告＋空 | **決定** | 同上 U-02 |
+| 開始年 1948・範囲外は空＋`onWarning?` | **決定**（N-H1 含む） | [open-questions](plans/v1.0.0/open-questions.md) U-02 / [new-open-questions](plans/unscheduled/new-open-questions.md) |
 | 振替・ロケール・CSV は PR マージ | **決定** | 同上 U-04 / U-07 / U-09 |
 
 ----

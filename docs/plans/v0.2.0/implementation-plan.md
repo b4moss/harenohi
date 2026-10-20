@@ -46,8 +46,18 @@ export function isHoliday(date: string): boolean
 ```
 
 - ロケール引数なし（D-17）
-- 1948 未満: **エラーにせず**警告＋空配列（D-15）。警告の**届け方**は未決 → 報告の N-H1。計画上は暫定で `options?: { onWarning?: (w: HolidayWarning) => void }` を第 2 引数に足せる設計にし、未指定時も空配列を返す（推奨案 B）
+- 1948 未満: **エラーにせず**空配列を返す（D-15）。警告は **N-H1 決定どおり** 第 2 引数 `options?: { onWarning?: (w: HolidayWarning) => void }` へ届ける。`onWarning` 未指定時は何もしない（既存の 1 引数呼び出しは壊さない）
 - 春分・秋分も振替対象（D-16）
+
+```ts
+export type HolidayWarning = { code: 'YEAR_BEFORE_MIN'; year: number; message: string }
+
+export function getHolidaysOfYear(
+  year: number,
+  options?: { onWarning?: (w: HolidayWarning) => void }
+): HolidayList
+// getHolidaysOfMonth も同様に options を受け取れるようにする（年が 1948 未満のとき）
+```
 
 ## 実装ステップ
 
@@ -64,7 +74,7 @@ export function isHoliday(date: string): boolean
 |--------|------|
 | 参照実装と振替差分で期待値が食い違う | 差分テストを先に書き、法令どおりを正とする |
 | 概算と公布の差 | D-15/U-05: v1 は概算許容。v0.3 の CSV で吸収 |
-| 警告 API 未決 | N-H1。暫定 options コールバック |
+| 警告の届け漏れ | N-H1 決定: `onWarning` 必須ではない。未指定時は空配列のみ（破壊なし） |
 
 ## 受け入れ条件との対応
 

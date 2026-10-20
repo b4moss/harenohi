@@ -14,7 +14,9 @@ timestamp: 2026-10-20
 |----|------|------|------|-----------------|
 | TC-API-YEAR-01 | 正常 | `getHolidaysOfYear(2024)` | 日付昇順の非空配列。各要素に `title`/`date` | API 正常系 |
 | TC-API-YEAR-02 | 境界 | `getHolidaysOfYear(1948)` | 非空（または法令上の祝日）・エラーなし | D-15 開始年 |
-| TC-API-YEAR-03 | 境界 | `getHolidaysOfYear(1947)` | **空配列**。警告が出る（届け方は N-H1）。**throw しない** | D-15 |
+| TC-API-YEAR-03 | 境界 | `getHolidaysOfYear(1947)` | **空配列**。**throw しない** | D-15 |
+| TC-API-YEAR-03b | 境界 | `getHolidaysOfYear(1947, { onWarning })` | 空配列＋`onWarning` が 1 回以上（`YEAR_BEFORE_MIN` 相当） | N-H1 |
+| TC-API-YEAR-03c | 境界 | `getHolidaysOfYear(1947)`（options なし） | 空配列のみ。例外なし（既存呼び方） | N-H1 |
 | TC-API-YEAR-04 | 異常 | `getHolidaysOfYear(2024.5)` / `NaN` | `HolidayInputError` | 整数でない year |
 | TC-API-MONTH-01 | 正常 | `(2024, 1)` | 1 月の祝日のみ | |
 | TC-API-MONTH-02 | 異常 | `(2024, 0)` / `(2024, 13)` | エラー | month 範囲 |

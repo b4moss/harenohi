@@ -16,7 +16,7 @@ timestamp: 2026-10-20
 | [v0.3.0/](v0.3.0/) | CSV / オーバーライド / Actions | 方針確定 |
 | [v1.0.0/](v1.0.0/) | API 安定・社内配信（ドメイン仕様の正本） | 仕様詳細 |
 | [unscheduled/other-locales.md](unscheduled/other-locales.md) | 他文化圏（After-v1.0.0） | 意図スタブ |
-| [unscheduled/new-open-questions.md](unscheduled/new-open-questions.md) | 計画中の追加未決（N-H1） | 仕様詳細 |
+| [unscheduled/new-open-questions.md](unscheduled/new-open-questions.md) | 追加決定（N-H1 決定済み） | 仕様詳細 |
 
 実装順: **v0.1.0 → v0.2.0 → v0.3.0 → v1.0.0**。
 
