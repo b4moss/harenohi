@@ -98,6 +98,21 @@ PO レビューにより **2026-10-20** に確定（U-05 は初期方針どお�
 
 **決定: A。** Actions が PR を作り、人が確認してからマージする。
 
+運用詳細（**2026-10-20 PO 承認**。正本は [data-sources.md](data-sources.md)）:
+
+- ワークフロー `fetch-holiday-csv` は **PR 作成のみ**（main 直書き・自動マージなし）
+- リポジトリ secret **`GITEA_TOKEN`** が必須（欠けると PR 作成ステップを失敗させる）
+
+## U-02 / N-D1 補足 — 政府 CSV 最古年と 1948〜1954（決定済み 2026-10-20 PO）
+
+対象開始年は 1948 のまま（U-02）。政府 CSV の最古年は **1955** のため:
+
+- **1948〜1954**: 祝日法に基づく演算
+- **override**: CSV 入手可能年（**1955 以降**）に限る
+
+詳細: [new-open-questions.md](../unscheduled/new-open-questions.md) N-D1 / [data-sources.md](data-sources.md) / [japan-holidays.md](japan-holidays.md)。
+
 ----
 
 以上
+

@@ -63,8 +63,8 @@ timestamp: 2026-10-20
 | 項目 | 内容 |
 |------|------|
 | **目的** | 政府 CSV → 年単位オーバーライドと更新フローを確立する |
-| **含む機能** | CSV パース、override JSON、過去分の初期投入、Actions による来年分 PR 作成 |
-| **受け入れ** | [data-sources.md](plans/v1.0.0/data-sources.md) どおり。既知年が政府公開と一致。Actions は PR を作り main 直書きしない |
+| **含む機能** | CSV パース、override JSON（**1955〜**）、1948〜1954 は演算、Actions による来年分 PR 作成（`GITEA_TOKEN`） |
+| **受け入れ** | [data-sources.md](plans/v1.0.0/data-sources.md) どおり。既知年が政府公開と一致。Actions は PR を作り main 直書きしない（N-D1 / U-09。2026-10-20 PO） |
 | **依存** | v0.2.0 |
 | **詳細** | [plans/v0.3.0/](plans/v0.3.0/) |
 
@@ -86,7 +86,8 @@ timestamp: 2026-10-20
 |------|------|------|
 | npm スコープ・公開時期 | **決定**（2026-10-20） | [open-questions.md](plans/v1.0.0/open-questions.md) |
 | 開始年 1948・範囲外は空＋`onWarning?` | **決定**（N-H1 含む） | [open-questions](plans/v1.0.0/open-questions.md) U-02 / [new-open-questions](plans/unscheduled/new-open-questions.md) |
-| 振替・ロケール・CSV は PR マージ | **決定** | 同上 U-04 / U-07 / U-09 |
+| CSV 最古 1955・1948〜1954 は演算・override は 1955〜 | **決定**（N-D1。2026-10-20 PO） | [new-open-questions](plans/unscheduled/new-open-questions.md) / [data-sources](plans/v1.0.0/data-sources.md) |
+| 振替・ロケール・CSV は PR マージ（`GITEA_TOKEN`） | **決定** | 同上 U-04 / U-07 / U-09 |
 
 ----
 

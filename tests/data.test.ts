@@ -1,9 +1,9 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { getHolidaysOfYear } from '../src/index.js'
-import { holidayEngine, resolveYear } from '../src/jp/resolve-year.js'
+import { getOverridesOfYear, holidayEngine, resolveYear } from '../src/jp/resolve-year.js'
 import {
   parseCsvText,
   parseLine,
@@ -71,12 +71,25 @@ describe('data sources (v0.3.0)', () => {
     expect(list[0]?.date.startsWith('2035-')).toBe(true)
   })
 
+  it('TC-DATA-NO-OVERRIDE-1948: 1948-1954 use compute (N-D1, no CSV override)', () => {
+    expect(existsSync(join(root, 'src/data/jp-holiday/override/1950.json'))).toBe(
+      false
+    )
+    expect(getOverridesOfYear(1950)).toBeNull()
+    const spy = vi.spyOn(holidayEngine, 'buildAllHolidays')
+    const list = getHolidaysOfYear(1950)
+    expect(spy).toHaveBeenCalledWith(1950)
+    expect(list.length).toBeGreaterThan(0)
+    expect(list.every((h) => h.date.startsWith('1950-'))).toBe(true)
+  })
+
   it('TC-DATA-ACTIONS-PR: workflow creates PR and never pushes to main', () => {
     const yml = readFileSync(
       join(root, '.gitea/workflows/fetch-holiday-csv.yml'),
       'utf8'
     )
     expect(yml).toMatch(/pulls|pull_request|Create PR|create.*PR/i)
+    expect(yml).toMatch(/GITEA_TOKEN/)
     expect(yml).not.toMatch(/git push\s+.*\bmain\b/)
     expect(yml).not.toMatch(/push:\s*\n\s*branches:\s*\n\s*-\s*main/)
   })

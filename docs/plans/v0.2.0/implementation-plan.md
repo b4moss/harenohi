@@ -47,6 +47,7 @@ export function isHoliday(date: string): boolean
 
 - ロケール引数なし（D-17）
 - 1948 未満: **エラーにせず**空配列を返す（D-15）。警告は **N-H1 決定どおり** 第 2 引数 `options?: { onWarning?: (w: HolidayWarning) => void }` へ届ける。`onWarning` 未指定時は何もしない（既存の 1 引数呼び出しは壊さない）
+- **1948〜1954**: 祝日法に基づく演算（政府 CSV 最古年は 1955。CSV override は v0.3.0 で 1955 以降に限る。N-D1。2026-10-20 PO 承認）
 - 春分・秋分も振替対象（D-16）
 
 ```ts

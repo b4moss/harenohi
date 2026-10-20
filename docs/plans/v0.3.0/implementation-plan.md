@@ -24,16 +24,22 @@ scripts/
   fetch-jp-holiday-csv.*
   parse-jp-holiday-csv.*
 .gitea/workflows/
-  fetch-holiday-csv.yml # workflow_dispatch / schedule。PR 作成。main 直書きしない
+  fetch-holiday-csv.yml # workflow_dispatch / schedule。PR 作成。main 直書きしない。GITEA_TOKEN 必須
 ```
 
 正本: [../v1.0.0/data-sources.md](../v1.0.0/data-sources.md)。
+
+## 年範囲（N-D1。2026-10-20 PO 承認）
+
+- 政府祝日 CSV の最古年は **1955**
+- **1948〜1954** は祝日法に基づく演算（override を置かない）
+- CSV override は **1955 年以降**（入手可能年）に限る
 
 ## API / 型
 
 公開 API シグネチャは v0.2.0 と同じ。内部のみ:
 
-- 該当年に `override/{year}.json` があれば演算せずそれを返す
+- 該当年に `override/{year}.json` があれば演算せずそれを返す（1955 以降の同梱年）
 - JSON 形: `{ "title": string, "date": "YYYY-MM-DD" }[]`
 
 ランタイム API は HTTP / FS にアクセスしない（ビルド同梱）。
@@ -41,9 +47,9 @@ scripts/
 ## 実装ステップ
 
 1. CSV パース（Shift_JIS 等）と override 生成スクリプト（life の `parse-jp-holiday-csv.mjs` 参考）
-2. 過去分の初期投入（1948〜入手可能年）
+2. 過去分の初期投入（**1955〜**入手可能年。1948〜1954 は演算のまま）
 3. `resolve-year` をオーバーライド優先に接続
-4. Actions: 取得 → パース → ブランチ + PR（D-18）
+4. Actions: 取得 → パース → ブランチ + PR（D-18。secret `GITEA_TOKEN`）
 5. 既知年の一致テスト（政府公開との突合はフィクスチャ化）
 
 ## リスク
@@ -60,7 +66,7 @@ scripts/
 |----------|------|
 | 既知年が政府公開と一致 | TC-DATA-YEAR-* |
 | オーバーライド年は演算しない | TC-DATA-OVERRIDE-SKIP |
-| Actions は PR 作成 | ワークフロー定義レビュー + ドライラン手順 |
+| Actions は PR 作成（GITEA_TOKEN・main 直書きなし） | ワークフロー定義レビュー + TC-DATA-ACTIONS-PR |
 
 ## 依存
 

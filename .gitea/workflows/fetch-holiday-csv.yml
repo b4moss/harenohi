@@ -1,4 +1,6 @@
-# 政府 CSV を取得し override を更新する PR を作成する（main 直書きしない = D-18）
+# 政府 CSV を取得し override を更新する PR を作成する（main 直書きしない = D-18）。
+# 運用（2026-10-20 PO 承認）: secret GITEA_TOKEN 必須。PR 作成のみ。自動マージしない。
+# 仕様正本: docs/plans/v1.0.0/data-sources.md
 name: fetch-holiday-csv
 
 on:
