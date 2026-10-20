@@ -27,7 +27,7 @@ timestamp: 2026-10-19
 | [api.md](api.md) | 公開 API・型・エラー・互換性 |
 | [japan-holidays.md](japan-holidays.md) | 日本祝日の演算ルールと振る舞い |
 | [data-sources.md](data-sources.md) | CSV / オーバーライド / Actions |
-| [open-questions.md](open-questions.md) | 未決項目（選択肢と推奨） |
+| [open-questions.md](open-questions.md) | 決定済み項目（旧・未決） |
 | [../unscheduled/other-locales.md](../unscheduled/other-locales.md) | v1 外 |
 
 ## 参照実装
@@ -39,8 +39,8 @@ timestamp: 2026-10-19
 
 ## 公開方針（v1）
 
-- パッケージ名の意向: `@b4moss/harenohi`（未決 U-01）
-- 当面は社内レジストリ配信を想定。インターネット無認証の npm 公開は PO 判断後（U-06）
+- パッケージ名: `@b4m/harenohi`（社内 Gitea レジストリ。公開時に `@b4moss/harenohi` へ移す。U-01 決定済み）
+- 当面は社内のみ。npmjs 公開は個別判断（U-06 決定済み）
 - SemVer。`v0.x` 中は破壊的変更を許容。`v1.0.0` は PO 判断（憲章 versioning-rule）
 
 ----
