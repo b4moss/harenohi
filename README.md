@@ -1,6 +1,8 @@
-# @b4moss/harenohi
+# @b4m/harenohi
 
-祝日演算ライブラリ（TypeScript / npm）。当面は日本の祝日。将来 OSS 公開予定。
+祝日演算ライブラリ（TypeScript / npm）。当面は日本の祝日。
+
+当面は社内 Gitea レジストリ（`@b4m`、framewaku と同じ仕組み）で配布する。npmjs 公開時に `@b4moss/harenohi` へ移す。
 
 詳細は [`docs/`](docs/) を正本とする。
 
