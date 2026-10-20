@@ -30,7 +30,9 @@ timestamp: 2026-10-20
 
 - うるう日を含む年の `getHolidaysOfYear` が例外にならないこと（祝日が 2/29 である必要はない）
 - 返却は日付昇順（安定契約）
+- **1948〜1954** は政府 CSV が無いため演算結果を返す（N-D1。2026-10-20 PO 承認。CSV override は 1955 以降。詳細は v0.3.0 / [data-sources](../../plans/v1.0.0/data-sources.md)）
 
 ----
 
 以上
+

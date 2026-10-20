@@ -3,7 +3,7 @@ title: "api"
 type: Plan
 status: 仕様詳細
 milestone: v1.0.0
-timestamp: 2026-10-19
+timestamp: 2026-10-20
 ---
 
 # 公開 API（v1.0.0）
@@ -40,8 +40,8 @@ export type HolidayList = Holiday[]
 その年の祝日・振替休日・国民の休日を、日付昇順で返す。
 
 - `year` は整数の西暦
-- 対象年にオーバーライドがあればそれを返す（演算しない）
-- なければ演算して返す
+- 対象年にオーバーライドがあればそれを返す（演算しない）。CSV override は **1955 年以降**（入手可能年）に限る（N-D1。2026-10-20 PO 承認）
+- なければ演算して返す。**1948〜1954** は政府 CSV が無いため **祝日法に基づく演算**で求める（N-D1）
 - 対象開始年より前の年の扱いは [open-questions.md](open-questions.md) U-02 / D-15 および N-H1 決定: **エラーにせず空配列（祝日なし）を返す**。警告は第 2 引数 `options.onWarning?` に届ける（未指定時は何もしない）
 
 ### `getHolidaysOfMonth(year: number, month: number): HolidayList`
@@ -95,7 +95,7 @@ options?: { onWarning?: (w: { code: 'YEAR_BEFORE_MIN'; year: number; message: st
 
 - 正常系: 既知の年・月・日で期待一覧 / 1 件 / true|false
 - 異常系: 不正日付、範囲外 month
-- 境界: 1948 年より前（空結果＋任意の onWarning）、うるう日を含む年、年末年始、GW（橋渡し休日）
+- 境界: 1948 年より前（空結果＋任意の onWarning）、**1948〜1954（演算）**、**1955 以降で override がある年（演算しない）**、うるう日を含む年、年末年始、GW（橋渡し休日）
 
 詳細のテスト仕様書は実装着手時に `docs/tests/` へ書く（憲章 TDD）。
 
