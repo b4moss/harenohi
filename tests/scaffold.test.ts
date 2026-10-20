@@ -31,7 +31,7 @@ describe('scaffold (v0.1.0)', () => {
   })
 
   it('placeholder export module loads', async () => {
-    const mod = await import('../src/index.ts')
+    const mod = await import('../src/index.js')
     expect(mod).toBeTypeOf('object')
   })
 })
