@@ -35,6 +35,12 @@ timestamp: 2026-10-20
 - 祝日演算本体
 - CI の自動 publish（後続）
 
+## 詳細
+
+- 実装計画: [implementation-plan.md](implementation-plan.md)
+- テスト仕様: [../../tests/v0.1.0/](../../tests/v0.1.0/)
+
 ----
 
 以上
+

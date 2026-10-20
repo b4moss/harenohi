@@ -31,6 +31,12 @@ timestamp: 2026-10-20
 - **参照実装:** `kohki/shikata-kohki-life` の `src/utils/holiday/`
 - CSV オーバーライド本格運用は v0.3.0（本版では演算のみでも可）
 
+## 詳細
+
+- 実装計画: [implementation-plan.md](implementation-plan.md)
+- テスト仕様: [../../tests/v0.2.0/](../../tests/v0.2.0/)
+
 ----
 
 以上
+
