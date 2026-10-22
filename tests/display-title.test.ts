@@ -68,6 +68,20 @@ describe('getDisplayTitle (i18n en)', () => {
     )
   })
 
+  it('TC-I18N-EN-06: one-off titles use Hepburn romaji (ASCII, no macrons)', () => {
+    const cases: Record<string, string> = {
+      即位礼正殿の儀: 'Sokuirei Seiden no Gi',
+      大喪の礼: 'Taiso no Rei',
+      結婚の儀: 'Kekkon no Gi',
+      '休日（祝日扱い）': 'Kyujitsu (Shukujitsu Atsukai)',
+      '体育の日（スポーツの日）': 'Taiiku no Hi (Supotsu no Hi)',
+    }
+    for (const [ja, en] of Object.entries(cases)) {
+      expect(getDisplayTitle({ title: ja, date: '2019-01-01' }, 'en')).toBe(en)
+      expect(enTitles[ja]).toBe(en)
+    }
+  })
+
   it('TC-I18N-FB-01: unknown title falls back to Japanese (no throw)', () => {
     expect(() =>
       getDisplayTitle({ title: '未知の祝日', date: '2024-01-01' }, 'en')
