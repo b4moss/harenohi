@@ -24,7 +24,7 @@ timestamp: 2026-10-20
 
 - SemVer。`v0.x` 中は破壊的変更可（[versioning-rule](charter/versioning-rule.md)）
 - タグは `main` に打つ
-- 社内 publish は `vX.Y.Z` タグ想定（framewaku と同型。実装は後続）
+- 社内 publish は `vX.Y.Z` タグ（または `workflow_dispatch`）。ワークフロー: [`.gitea/workflows/npm-publish.yml`](../.gitea/workflows/npm-publish.yml)。手順: [specs/npm-publish.md](specs/npm-publish.md)
 
 ## 実装計画（版一覧）
 
@@ -73,7 +73,7 @@ timestamp: 2026-10-20
 | 項目 | 内容 |
 |------|------|
 | **目的** | 日本祝日ライブラリとして社内利用可能な品質で出す |
-| **含む機能** | API・型の安定、ドキュメント、社内 registry への publish 手順 |
+| **含む機能** | API・型の安定、ドキュメント、社内 registry への publish（ワークフローは [npm-publish](specs/npm-publish.md)。v1 受け入れの残りは plans） |
 | **受け入れ** | [plans/v1.0.0/README.md](plans/v1.0.0/README.md) の受け入れ一覧。カバレッジ目安 50%。npmjs 公開は必須としない |
 | **依存** | v0.3.0 |
 | **詳細** | [plans/v1.0.0/](plans/v1.0.0/) |

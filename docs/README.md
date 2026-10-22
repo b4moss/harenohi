@@ -66,6 +66,7 @@ timestamp: 2026-10-20
 | 参照実装 | `kohki/shikata-kohki-life` の `src/utils/holiday/` |
 | 配布 | `@b4m/harenohi` → 社内 Gitea npm（framewaku と同じ）。公開時に `@b4moss/harenohi` へ移す |
 | レジストリ設定 | ルート [`.npmrc`](../.npmrc)（トークンは `${PACKAGE_REGISTRY_TOKEN}`） |
+| 社内 publish | plain `vX.Y.Z` タグまたは `workflow_dispatch`（[specs/npm-publish.md](specs/npm-publish.md)。secret `PACKAGE_REGISTRY_TOKEN`） |
 | 開発環境 | [`.devcontainer/`](../.devcontainer/)（Node 24。jp-org-parse 系に合わせる） |
 | テスト | 憲章 TDD・氷山パターン。単体を厚め。E2E 不要 |
 
