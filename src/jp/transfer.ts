@@ -1,5 +1,5 @@
 import { addDays, dayOfWeek } from '../internal/date.js'
-import type { Holiday, HolidayList } from '../types.js'
+import type { HolidayList } from '../types.js'
 
 const sortByDate = (list: HolidayList): HolidayList =>
   [...list].sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))

@@ -49,7 +49,7 @@ function jobBlock(yml: string, jobName: string): string {
   const out = [lines[start]!]
   for (let i = start + 1; i < lines.length; i++) {
     const line = lines[i]!
-    if (/^  [A-Za-z0-9_-]+:/.test(line)) break
+    if (/^ {2}[A-Za-z0-9_-]+:/.test(line)) break
     out.push(line)
   }
   return out.join('\n')
