@@ -60,7 +60,8 @@ timestamp: 2026-10-20
 | 日付 | `YYYY-MM-DD` 文字列。時刻は扱わない |
 | 依存 | 外部日付ライブラリなし（`Date` / 自前ヘルパ） |
 | モジュール | ESM + 型定義のみ |
-| API | v1 は日本固定。ロケール引数なし |
+| API | v1 は日本固定。演算 API に国・ロケール引数なし（U-07）。表示名 en は `@b4m/harenohi/locales`（[specs/display-title-i18n.md](specs/display-title-i18n.md)） |
+
 | アーキテクチャ | 純関数の演算層中心（憲章のパッケージ例外） |
 | 参照実装 | `kohki/shikata-kohki-life` の `src/utils/holiday/` |
 | 配布 | `@b4m/harenohi` → 社内 Gitea npm（framewaku と同じ）。公開時に `@b4moss/harenohi` へ移す |
@@ -85,7 +86,7 @@ timestamp: 2026-10-20
 - 憲章: [charter/](charter/)（取り込み元: [b4moss/charter](https://github.com/b4moss/charter)。framewaku と同じく `docs/` を `docs/charter/` へファイルコピー）
 - オーバーライド: [override-charter.md](override-charter.md)（現状なし）
 - 計画: [plans/](plans/) / 版ハブ: [roadmap.md](roadmap.md)
-- 現行仕様: [specs/](specs/)（未実装のため空）
+- 現行仕様: [specs/](specs/)（表示名 i18n: [display-title-i18n.md](specs/display-title-i18n.md)）
 - 決定ログ: [plans/v1.0.0/open-questions.md](plans/v1.0.0/open-questions.md)（2026-10-20 PO）
 
 ----
