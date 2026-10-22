@@ -12,6 +12,7 @@
 | [docs/specs/](docs/specs/) | 実装済み仕様 |
 | [docs/charter/](docs/charter/) | 開発憲章（[b4moss/charter](https://github.com/b4moss/charter) 由来） |
 | [`.npmrc`](.npmrc) | `@b4m` → 社内 registry（トークンは環境変数） |
+| [docs/specs/npm-publish.md](docs/specs/npm-publish.md) | 社内 npm 公開（`vX.Y.Z` タグ / Actions） |
 | [`.devcontainer/`](.devcontainer/) | 開発コンテナ（Node 24） |
 
 ## 表示用タイトル（英語）
