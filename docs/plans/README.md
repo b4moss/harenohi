@@ -18,6 +18,8 @@ timestamp: 2026-10-20
 | [unscheduled/other-locales.md](unscheduled/other-locales.md) | 他文化圏（After-v1.0.0） | 意図スタブ |
 | [unscheduled/new-open-questions.md](unscheduled/new-open-questions.md) | 追加決定（N-H1 決定済み） | 仕様詳細 |
 
+日本祝日名の表示用 en: 実装済み → [../specs/display-title-i18n.md](../specs/display-title-i18n.md)（Issue #10。他文化圏スタブとは別）。
+
 実装順: **v0.1.0 → v0.2.0 → v0.3.0 → v1.0.0**。
 
 ----
