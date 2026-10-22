@@ -9,7 +9,11 @@ timestamp: 2026-10-19
 
 現行バージョンに存在する機能の仕様正本。
 
-未実装のため現状は空。実装が終わった単位から `plans/` より移す。
+| パス | 内容 |
+|------|------|
+| [display-title-i18n.md](display-title-i18n.md) | 表示用祝日名（en）・`getDisplayTitle` |
+
+その他のドメインは実装後に `plans/` から移す。
 
 ----
 

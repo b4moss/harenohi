@@ -31,7 +31,7 @@ export interface Holiday {
 export type HolidayList = Holiday[]
 ```
 
-`title` は政府 CSV / 法令上の呼称に合わせる。英語名は v1 では出さない。
+`title` は政府 CSV / 法令上の呼称に合わせる。英語名はコア返却には含めない。表示用英名は別エントリ `@b4m/harenohi/locales` の `getDisplayTitle`（[../../specs/display-title-i18n.md](../../specs/display-title-i18n.md)。Issue #10 / W-T6）。
 
 ## 関数
 
