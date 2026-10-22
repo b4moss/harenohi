@@ -42,7 +42,15 @@ export const enTitles: Readonly<Record<string, string>> = {
 
   // Historical Japanese title key (former Act name before Sports Day rename)
   体育の日: 'Health and Sports Day',
+
+  // One-off / no official English: Hepburn romaji, ASCII only, no macrons
+  即位礼正殿の儀: 'Sokuirei Seiden no Gi',
+  大喪の礼: 'Taiso no Rei',
+  結婚の儀: 'Kekkon no Gi',
+  '休日（祝日扱い）': 'Kyujitsu (Shukujitsu Atsukai)',
+  '体育の日（スポーツの日）': 'Taiiku no Hi (Supotsu no Hi)',
 }
+
 
 export type CsvHolidayCorrespondence = {
   /** Titles used by harenohi compute path for the same legal mechanism */
