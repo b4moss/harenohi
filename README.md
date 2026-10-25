@@ -10,7 +10,7 @@
 | [docs/roadmap.md](docs/roadmap.md) | 版・マイルストーン |
 | [docs/plans/](docs/plans/) | これからやる内容（未実装仕様） |
 | [docs/specs/](docs/specs/) | 実装済み仕様 |
-| [docs/charter/](docs/charter/) | 開発憲章（[b4moss/charter](https://github.com/b4moss/charter) 由来） |
+| 開発憲章 | AGENTS.md の「開発憲章（charter）」節 → [b4moss/charter v1](https://github.com/b4moss/charter/tree/v1/docs/charter) |
 | [`.npmrc`](.npmrc) | `@b4m` → 社内 registry（トークンは環境変数） |
 | [docs/specs/npm-publish.md](docs/specs/npm-publish.md) | 社内 npm 公開（`vX.Y.Z` タグ / Actions） |
 | [`.devcontainer/`](.devcontainer/) | 開発コンテナ（Node 24） |
