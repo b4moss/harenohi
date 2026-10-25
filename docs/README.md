@@ -84,7 +84,7 @@ timestamp: 2026-10-20
 
 ## 憲章・ドキュメント
 
-- 憲章: [charter/](charter/)（取り込み元: [b4moss/charter](https://github.com/b4moss/charter)。framewaku と同じく `docs/` を `docs/charter/` へファイルコピー）
+- 憲章: AGENTS.md の「開発憲章（charter）」節 → [b4moss/charter v1](https://github.com/b4moss/charter/tree/v1/docs/charter)
 - オーバーライド: [override-charter.md](override-charter.md)（現状なし）
 - 計画: [plans/](plans/) / 版ハブ: [roadmap.md](roadmap.md)
 - 現行仕様: [specs/](specs/)（表示名 i18n: [display-title-i18n.md](specs/display-title-i18n.md)）
