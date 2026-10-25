@@ -11,7 +11,14 @@ timestamp: 2026-10-19
 
 | パス | 内容 |
 |------|------|
+<<<<<<< HEAD
 | [ci-cd.md](ci-cd.md) | CI ワークフローと Lint |
+=======
+| [display-title-i18n.md](display-title-i18n.md) | 表示用祝日名（en）・`getDisplayTitle` |
+| [npm-publish.md](npm-publish.md) | 社内 Gitea Packages への npm 公開 |
+
+その他のドメインは実装後に `plans/` から移す。
+>>>>>>> origin/main
 
 ----
 

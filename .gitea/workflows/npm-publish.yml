@@ -1,0 +1,123 @@
+# Publish @b4m/harenohi to Gitea Packages (b4m-packages npm registry).
+# Package root is the repository root; `files: ["dist"]` so build must run before publish.
+# Triggers on plain SemVer tags vX.Y.Z (suffix tags like v0.4.0-doc.1 are skipped).
+name: npm-publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version without v prefix (e.g. 0.4.0). Required for manual runs.'
+        required: true
+        default: ''
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version / tag filter
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.version }}"
+            VERSION="${VERSION#v}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+            # Only plain vX.Y.Z — skip -doc / -rc / other suffixes
+            if [[ ! "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "skip=true" >>"$GITHUB_OUTPUT"
+              echo "Skipping non-release tag: ${TAG}"
+              exit 0
+            fi
+            VERSION="${TAG#v}"
+          fi
+          if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version: ${VERSION}" >&2
+            exit 1
+          fi
+          echo "skip=false" >>"$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >>"$GITHUB_OUTPUT"
+          echo "Publish version: ${VERSION}"
+
+      - name: Check secret
+        if: steps.meta.outputs.skip != 'true'
+        id: secret
+        env:
+          # Gitea Actions rejects secret names starting with GITEA_ / GITHUB_.
+          PACKAGE_REGISTRY_TOKEN: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${PACKAGE_REGISTRY_TOKEN:-}" ]]; then
+            echo "present=true" >>"$GITHUB_OUTPUT"
+          else
+            echo "present=false" >>"$GITHUB_OUTPUT"
+            echo "::error::PACKAGE_REGISTRY_TOKEN is not set. Create a Packages write token and add the repo secret."
+            exit 1
+          fi
+
+      - name: Setup Node
+        if: steps.meta.outputs.skip != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Verify committed versions match release
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          set -euo pipefail
+          # Fail on mismatch instead of rewriting package.json / VERSION at publish time.
+          # Reason: a tag must describe what is already on the branch. Silently bumping
+          # versions in CI would hide drift between git tag, package.json, and the
+          # runtime `VERSION` export (`src/version.ts`), so consumers and release
+          # history could disagree about which commit is which release.
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          SRC_VERSION="$(node -p "const fs=require('fs'); const t=fs.readFileSync('src/version.ts','utf8'); const m=t.match(/VERSION\\s*=\\s*'([^']+)'/); if(!m) throw new Error('VERSION not found in src/version.ts'); m[1]")"
+          echo "tag/dispatch version=${VERSION}"
+          echo "package.json version=${PKG_VERSION}"
+          echo "src/version.ts VERSION=${SRC_VERSION}"
+          if [[ "${PKG_VERSION}" != "${VERSION}" ]]; then
+            echo "::error::package.json version (${PKG_VERSION}) does not match release version (${VERSION}). Bump and commit before tagging or dispatching."
+            exit 1
+          fi
+          if [[ "${SRC_VERSION}" != "${VERSION}" ]]; then
+            echo "::error::src/version.ts VERSION (${SRC_VERSION}) does not match release version (${VERSION}). Bump and commit before tagging or dispatching."
+            exit 1
+          fi
+
+      - name: Configure npm auth
+        if: steps.meta.outputs.skip != 'true'
+        env:
+          PACKAGE_REGISTRY_TOKEN: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
+        run: |
+          set -euo pipefail
+          cat > .npmrc <<EOF
+          @b4m:registry=https://git.b4m.jp/api/packages/b4m-packages/npm/
+          //git.b4m.jp/api/packages/b4m-packages/npm/:_authToken=${PACKAGE_REGISTRY_TOKEN}
+          //git.b4m.jp/api/packages/b4m-packages/npm/:always-auth=true
+          EOF
+
+      - name: Install, build, and test
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+          npm test
+
+      - name: npm publish
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          # package.json "files": ["dist"] — publish the built artifacts from the previous step.
+          npm publish --access restricted

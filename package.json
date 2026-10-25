@@ -1,6 +1,6 @@
 {
   "name": "@b4m/harenohi",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "祝日演算ライブラリ（当面は日本の祝日）",
   "type": "module",
   "main": "./dist/index.js",
@@ -9,6 +9,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./locales": {
+      "types": "./dist/locales/index.d.ts",
+      "import": "./dist/locales/index.js"
+    },
+    "./locales/en": {
+      "types": "./dist/locales/en.d.ts",
+      "import": "./dist/locales/en.js"
     }
   },
   "files": [
