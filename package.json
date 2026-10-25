@@ -33,6 +33,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "lint": "eslint .",
     "fetch:jp-holiday": "node scripts/fetch-jp-holiday-csv.mjs",
     "parse:jp-holiday": "node scripts/parse-jp-holiday-csv.mjs"
   },
@@ -44,8 +45,11 @@
   "license": "UNLICENSED",
   "private": false,
   "devDependencies": {
+    "@eslint/js": "^9.37.0",
     "@types/node": "^24.0.0",
+    "eslint": "^9.37.0",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0",
     "vitest": "^3.2.4"
   }
 }

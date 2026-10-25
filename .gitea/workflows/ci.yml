@@ -1,10 +1,12 @@
-# CI — Gitea Actions（npm test / typecheck / build）
+# CI — Gitea Actions（lint / typecheck / test / build）
 name: ci
 
 on:
   pull_request:
     branches:
       - main
+      - develop
+      - 'dev-*'
       - 'cursor/**'
     paths-ignore:
       - 'docs/**'
@@ -17,20 +19,30 @@ concurrency:
 
 jobs:
   test:
+    # 上流 PR（develop → main）は通過済みとして skip（charter CI/CD）
+    if: ${{ !(github.event_name == 'pull_request' && github.head_ref == 'develop' && github.base_ref == 'main') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
+
       - name: Install
         run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
       - name: Typecheck
         run: npm run typecheck
+
       - name: Test
         run: npm test
+
       - name: Build
         run: npm run build
