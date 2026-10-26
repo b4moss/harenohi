@@ -16,7 +16,7 @@ timestamp: 2026-10-26
 - PO 決定（2026-10-20）反映済み
 - **npmjs.org 公開を決定**（2026-10-26、こうきさん）。準備: `.github/workflows/publish.yml`、パッケージ名 `@b4moss/harenohi`
 - 社内 Gitea Packages（`@b4m/harenohi`）は当面併存（D-8）
-- **次の実装マイルストーン**: [v1.0.0](plans/v1.0.0/)（API 安定）および初版 npmjs 公開（タグ後）
+- **次の実装マイルストーン**: [v1.0.0](plans/v1.0.0/)（API 安定）および初版 npmjs 公開（タグ後。初版のタグは未決: 既存 `v0.4.0` は `publish.yml` 導入前のコミットを指すため、おすすめは patch を上げて `v0.4.1`。GitHub `b4moss/harenohi` と Environment `npm-publish` は作成済み、push mirror は未設定。詳細は [specs/npm-publish.md](specs/npm-publish.md) の「公開準備の状況」）
 
 ## バージョニング方針
 

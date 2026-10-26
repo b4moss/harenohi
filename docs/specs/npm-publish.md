@@ -104,6 +104,27 @@ timestamp: 2026-10-26
 
 タグは「すでにブランチに載っている版」を指すべきである。公開時に `package.json` や `VERSION` を黙って上げると、git タグ・`package.json`・ランタイムの `VERSION`（`src/version.ts`）が食い違ったまま配布され、利用側と履歴が一致しなくなる。そのため **先にコミットで版を揃え、タグ／dispatch はその版と一致させる**。
 
+## 公開準備の状況（2026-10-26 時点）
+
+| 項目 | 状態 |
+|------|------|
+| GitHub リポ | `b4moss/harenohi` を **public** で作成済み（まだ空。ミラー未着） |
+| GitHub Environment | `npm-publish` を作成済み。デプロイを許すのは **`v*` タグだけ** |
+| push mirror（Gitea → GitHub） | **未設定**。Gitea は SSH の push mirror に対応していないため、HTTPS と fine-grained PAT（対象は `b4moss/calengine` と `b4moss/harenohi` の 2 リポだけ、権限は Contents と Workflows の Read and write）で設定する予定。PAT の渡し方は未決 |
+| ミラー前の作業ブランチ | `chore/npmjs-publish-prep`・`cursor/ci-resume-132` をミラー前に消すかは未決 |
+| `NPM_TOKEN` / Trusted Publisher | 未作成・未登録（npm トークン、タグ、公開は PO の OK 待ち） |
+| 社内レジストリ | タグで社内 `npm-publish` がいっしょに動いても構わない（2026-10-26 PO）。同じ版が社内に既にあれば社内側は失敗する見込みで、npmjs 側には影響しない |
+| NOTICE | 出典が書いてあれば問題ない（2026-10-26 PO）。D-10 の「要確認」は解消 |
+
+### 初版のタグ（未決）
+
+既存タグ `v0.4.0` は `.github/workflows/publish.yml` が入る**前**のコミットを指す。そのため「今の版（`0.4.0`）のまま初版を出す」はタグでは動かない（`publish.yml` はタグが指すコミットの workflow で動き、`workflow_dispatch` も無い）。案:
+
+- **(a) パッチ版を上げる（おすすめ）**: `0.4.1` に版を揃えてから `v0.4.1` を打ち、これを npmjs の初版にする
+- **(b)** `publish.yml` に `workflow_dispatch` を足し、現行 `main` から `0.4.0` を出す
+- **(c)** 既存タグ `v0.4.0` を打ち直す（公開済みタグの付け替えになる）
+
+
 ## 公開前チェックリスト（人手）
 
 1. `package.json` の `version` と `src/version.ts` の `VERSION` を同じ `X.Y.Z` にする
