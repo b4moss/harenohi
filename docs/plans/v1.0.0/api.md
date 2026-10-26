@@ -14,7 +14,7 @@ timestamp: 2026-10-20
 
 - 引数の日付は文字列 `YYYY-MM-DD`（ゼロ埋め）。時刻・タイムゾーンは扱わない
 - v1 は日本の国民の祝日のみ。ロケール引数は持たない（U-07 決定）
-- 参照実装（`shikata-kohki-life`）の関数群を基にするが、パッケージ公開に耐える命名・型・エラー／警告を明示する
+- 参照実装（先行する個人カレンダー実装）の関数群を基にするが、パッケージ公開に耐える命名・型・エラー／警告を明示する
 - 副作用なし（純関数）。ネットワーク I/O はランタイム API に含めない（データ更新はビルド / Actions）
 
 ## 型
@@ -31,7 +31,7 @@ export interface Holiday {
 export type HolidayList = Holiday[]
 ```
 
-`title` は政府 CSV / 法令上の呼称に合わせる。英語名はコア返却には含めない。表示用英名は別エントリ `@b4m/harenohi/locales` の `getDisplayTitle`（[../../specs/display-title-i18n.md](../../specs/display-title-i18n.md)。Issue #10 / W-T6）。
+`title` は政府 CSV / 法令上の呼称に合わせる。英語名はコア返却には含めない。表示用英名は別エントリ `@b4moss/harenohi/locales` の `getDisplayTitle`（[../../specs/display-title-i18n.md](../../specs/display-title-i18n.md)。Issue #10 / W-T6）。
 
 ## 関数
 

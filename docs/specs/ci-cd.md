@@ -22,6 +22,13 @@ timestamp: 2026-10-22
 ## 祝日 CSV 取得（`.gitea/workflows/fetch-holiday-csv.yml`）
 
 - `schedule` と `workflow_dispatch` のみ。`pull_request` では起動しない
+- **Gitea のみ**。GitHub 側には同じ workflow を置かない
+
+## npm 公開
+
+- npmjs.org: [`.github/workflows/publish.yml`](../../.github/workflows/publish.yml)（`vX.Y.Z` タグ、`id-token: write`、environment `npm-publish`）
+- 社内 Gitea Packages: [`.gitea/workflows/npm-publish.yml`](../../.gitea/workflows/npm-publish.yml)（name を一時的に `@b4m/harenohi` に書き換え）
+- 詳細: [npm-publish.md](npm-publish.md)
 
 ## Lint
 

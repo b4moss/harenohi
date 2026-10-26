@@ -32,7 +32,7 @@ timestamp: 2026-10-19
 
 ## 参照実装
 
-- `kohki/shikata-kohki-life` の `src/utils/holiday/`
+- 先行する個人カレンダー実装の `src/utils/holiday/`
 - 同リポの CSV パーススクリプト `scripts/parse-jp-holiday-csv.mjs`
 
 切り出し時は依存（例: Day.js）を本パッケージ方針（[open-questions.md](open-questions.md) U-03）に合わせて整理する。
@@ -43,7 +43,7 @@ timestamp: 2026-10-19
 
 ## 公開方針（v1）
 
-- パッケージ名: `@b4m/harenohi`（社内 Gitea レジストリ。公開時に `@b4moss/harenohi` へ移す。U-01 決定済み）
+- パッケージ名: `@b4moss/harenohi`（npmjs.org）。社内は当面 `@b4m/harenohi` 併存（U-01 / 2026-10-26 追記）
 - 当面は社内のみ。npmjs 公開は個別判断（U-06 決定済み）
 - SemVer。`v0.x` 中は破壊的変更を許容。`v1.0.0` は PO 判断（憲章 versioning-rule）
 

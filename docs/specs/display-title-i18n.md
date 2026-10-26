@@ -13,15 +13,15 @@ Issue #10 / W-T1〜W-T8。コア API の `Holiday.title`（日本語）は変え
 
 | subpath | 内容 |
 |---------|------|
-| `@b4m/harenohi` | 既存 API のみ。`title` は日本語 |
-| `@b4m/harenohi/locales` | `getDisplayTitle` および英名マップの再エクスポート |
-| `@b4m/harenohi/locales/en` | 英語タイトルマップ・CSV「休日」対応表 |
+| `@b4moss/harenohi` | 既存 API のみ。`title` は日本語 |
+| `@b4moss/harenohi/locales` | `getDisplayTitle` および英名マップの再エクスポート |
+| `@b4moss/harenohi/locales/en` | 英語タイトルマップ・CSV「休日」対応表 |
 
 ## API
 
 ```ts
-import { getDisplayTitle } from '@b4m/harenohi/locales'
-import { enTitles, csvHolidayCorrespondence } from '@b4m/harenohi/locales/en'
+import { getDisplayTitle } from '@b4moss/harenohi/locales'
+import { enTitles, csvHolidayCorrespondence } from '@b4moss/harenohi/locales/en'
 
 getDisplayTitle(holiday, 'en') // 英訳または日本語フォールバック
 getDisplayTitle(holiday)       // 日本語 title のまま

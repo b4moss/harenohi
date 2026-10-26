@@ -1,0 +1,49 @@
+NOTICE — Third-party data bundled with @b4moss/harenohi
+=======================================================
+
+This package includes holiday-related data derived from the following sources.
+Use of that data remains subject to each source's terms. The package authors do
+not claim ownership of the underlying government data or translations.
+
+1. Cabinet Office of Japan — "国民の祝日" (National Holidays) CSV
+----------------------------------------------------------------
+Source (CSV):
+  https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv
+
+Overview page:
+  https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html
+
+Terms of use (内閣府ホームページ利用規約):
+  https://www.cao.go.jp/notice/rule.html
+
+Index of site notices (利用案内):
+  https://www.cao.go.jp/notice.html
+
+The CSV is used as the authoritative past / confirmed holiday override data
+(from 1955 onward). Redistribution and reuse must follow the Cabinet Office
+website terms linked above.
+
+2. Japanese Law Translation Database System — English holiday names
+-------------------------------------------------------------------
+Primary source for English display titles of the current 16 national holidays:
+  Act on National Holidays (Act No. 178 of 1948), English translation
+  https://www.japaneselawtranslation.go.jp/en/laws/view/4846/en
+
+Terms of Use:
+  https://www.japaneselawtranslation.go.jp/en/index/terms
+
+These English names are **reference translations**, not official texts.
+The official text of Japanese law is the Japanese version only. The English
+titles in this package are for display convenience and must be used in
+accordance with the Japanese Law Translation Database System Terms of Use.
+
+3. Package-authored fixed translations
+--------------------------------------
+Substitute Holiday / Citizens' Holiday / Public Holiday (CSV opaque label
+「休日」) and some historical or one-off romanizations are package-authored
+display strings, not taken from the Act translation Article 3 proper nouns.
+See docs/specs/display-title-i18n.md for details.
+
+Legal review of attribution and redistribution for public npm release is the
+responsibility of the package owner (PO). This NOTICE is informational and
+does not constitute legal advice.

@@ -16,7 +16,7 @@ timestamp: 2026-10-20
 |----|------|------|--------------|
 | TC-SCAF-01 | 正常 | `npm test`（または同等）が成功する | 空でもテスト緑 |
 | TC-SCAF-02 | 正常 | `tsc --noEmit`（またはビルド）が成功する | 型チェック |
-| TC-SCAF-03 | 正常 | `package.json` の `name` が `@b4m/harenohi` | パッケージ名 |
+| TC-SCAF-03 | 正常 | `package.json` の `name` が `@b4moss/harenohi`（`publishConfig.access: public`） | パッケージ名 |
 | TC-SCAF-04 | 正常 | `exports` / 型定義パスが ESM 向けに設定されている | D-05 |
 
 ### TC-SCAF-01
@@ -27,7 +27,7 @@ timestamp: 2026-10-20
 ### TC-SCAF-03
 
 - **入力:** `package.json`
-- **期待:** `"name": "@b4m/harenohi"`。`publishConfig.registry` が社内 URL（任意だが推奨）
+- **期待:** `"name": "@b4moss/harenohi"`。`publishConfig.access` が `public`（社内公開は workflow 側で name を `@b4m/harenohi` に一時書き換え）
 
 境界値: 本版では業務ロジックなし。異常系はパッケージ設定の欠落検出のみ。
 

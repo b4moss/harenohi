@@ -10,7 +10,7 @@ timestamp: 2026-10-20
 
 ## 目的
 
-`kohki/shikata-kohki-life` の祝日演算を移植し、公開 API 骨格を単体テスト付きで動かす（D-03 参照元）。CSV オーバーライド本格運用は v0.3.0。
+先行する個人カレンダー実装の祝日演算を移植し、公開 API 骨格を単体テスト付きで動かす（D-03 参照元）。CSV オーバーライド本格運用は v0.3.0。
 
 ## 対象ファイル・モジュール構成（案）
 
@@ -29,7 +29,7 @@ src/
     date.ts                # YYYY-MM-DD パース／検証（外部日付ライブラリなし = D-06）
 ```
 
-参照: `kohki/shikata-kohki-life` の `src/utils/holiday/`。Day.js 呼び出しは剥がす。
+参照: 先行する個人カレンダー実装の `src/utils/holiday/`。Day.js 呼び出しは剥がす。
 
 ## API / 型
 

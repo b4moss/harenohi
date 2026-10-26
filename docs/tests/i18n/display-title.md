@@ -9,7 +9,7 @@ timestamp: 2026-10-22
 
 Issue #10（祝日名の多言語対応）。W-T1〜W-T8 推奨案に従う。
 
-`getDisplayTitle(holiday, locale?)` は `Holiday.title`（日本語）をキーに、指定ロケールの表示名を返す。ロケール未指定・未対応・訳欠落時は日本語 `title` へフォールバックし、エラーにしない。英語データは `@b4m/harenohi/locales/en`（コア `.` エントリには載せない）。
+`getDisplayTitle(holiday, locale?)` は `Holiday.title`（日本語）をキーに、指定ロケールの表示名を返す。ロケール未指定・未対応・訳欠落時は日本語 `title` へフォールバックし、エラーにしない。英語データは `@b4moss/harenohi/locales/en`（コア `.` エントリには載せない）。
 
 ### getDisplayTitle
 
@@ -31,11 +31,11 @@ Issue #10（祝日名の多言語対応）。W-T1〜W-T8 推奨案に従う。
 
 - 対応表に無い未知の日本語タイトルはエラーにせず日本語のまま返す（W-T4）
 - 未対応ロケール（例: `fr`）は日本語へフォールバック
-- コア `@b4m/harenohi` の `Holiday.title` は日本語のまま（既存 API 非破壊）
+- コア `@b4moss/harenohi` の `Holiday.title` は日本語のまま（既存 API 非破壊）
 
 ### locales/en エントリ
 
-- `@b4m/harenohi/locales/en` から英名マップを named export できる
+- `@b4moss/harenohi/locales/en` から英名マップを named export できる
 - パッケージ `exports` に `./locales` と `./locales/en` がある
 
 ----

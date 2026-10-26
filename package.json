@@ -1,8 +1,27 @@
 {
-  "name": "@b4m/harenohi",
+  "name": "@b4moss/harenohi",
   "version": "0.4.0",
   "description": "祝日演算ライブラリ（当面は日本の祝日）",
   "type": "module",
+  "license": "MIT",
+  "author": "Kohki SHIKATA <kohki.shikata@gmail.com>",
+  "homepage": "https://github.com/b4moss/harenohi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b4moss/harenohi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/b4moss/harenohi/issues"
+  },
+  "keywords": [
+    "holiday",
+    "japan",
+    "calendar"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -20,13 +39,15 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.map",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "CHANGELOG.md"
   ],
-  "engines": {
-    "node": ">=24"
-  },
   "publishConfig": {
-    "registry": "https://git.b4m.jp/api/packages/b4m-packages/npm/"
+    "access": "public"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -37,13 +58,6 @@
     "fetch:jp-holiday": "node scripts/fetch-jp-holiday-csv.mjs",
     "parse:jp-holiday": "node scripts/parse-jp-holiday-csv.mjs"
   },
-  "keywords": [
-    "holiday",
-    "japan",
-    "calendar"
-  ],
-  "license": "UNLICENSED",
-  "private": false,
   "devDependencies": {
     "@eslint/js": "^9.37.0",
     "@types/node": "^24.0.0",

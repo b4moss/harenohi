@@ -24,6 +24,12 @@ timestamp: 2026-10-22
 | TC-CI-07 | 正常 | `ci.yml` の runner / Node | `runs-on: ubuntu-latest`、Node 24、`cache: npm` |
 | TC-CI-08 | 正常 | `fetch-holiday-csv.yml` の `on` | `schedule` と `workflow_dispatch` のみ。`pull_request` が無い |
 | TC-CI-09 | 異常 | `ci.yml` のステップ | E2E 用の `run` が無い（E2E は CI に含めない） |
+| TC-PUB-01 | 正常 | `.github/workflows/publish.yml` の `on` | `v[0-9]+.[0-9]+.[0-9]+` タグのみ。`workflow_dispatch` なし |
+| TC-PUB-02 | 正常 | `publish.yml` の `permissions` | `contents: read` と `id-token: write` |
+| TC-PUB-03 | 正常 | `publish.yml` | タグと `package.json` / `src/version.ts` の版一致検査 |
+| TC-PUB-04 | 正常 | `publish.yml` | `npm publish --access public --provenance` |
+| TC-PUB-05 | 正常 | `publish.yml` | `ubuntu-latest`、`environment: npm-publish`、Node 24、`registry-url` npmjs |
+| TC-PUB-GITEA-01 | 正常 | `.gitea/workflows/npm-publish.yml` | name を `@b4m/harenohi` に一時書き換え、`--registry` で社内公開 |
 
 ### TC-CI-01
 
