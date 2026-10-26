@@ -1,5 +1,7 @@
-# Publish @b4m/harenohi to Gitea Packages (b4m-packages npm registry).
-# Package root is the repository root; `files: ["dist"]` so build must run before publish.
+# Publish @b4m/harenohi to the internal Gitea npm registry (coexistence with npmjs @b4moss/harenohi).
+# package.json name is @b4moss/harenohi for npmjs; this job temporarily rewrites name to @b4m/harenohi
+# and publishes with --registry. Same vX.Y.Z tag may fire both Gitea and GitHub publish workflows —
+# see docs/specs/npm-publish.md for ordering and failure handling.
 # Triggers on plain SemVer tags vX.Y.Z (suffix tags like v0.4.0-doc.1 are skipped).
 name: npm-publish
 
@@ -95,7 +97,7 @@ jobs:
             exit 1
           fi
 
-      - name: Configure npm auth
+      - name: Configure npm auth (internal @b4m registry)
         if: steps.meta.outputs.skip != 'true'
         env:
           PACKAGE_REGISTRY_TOKEN: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
@@ -115,9 +117,20 @@ jobs:
           npm run build
           npm test
 
-      - name: npm publish
+      - name: npm publish as @b4m/harenohi (internal registry)
         if: steps.meta.outputs.skip != 'true'
+        env:
+          INTERNAL_REGISTRY: https://git.b4m.jp/api/packages/b4m-packages/npm/
         run: |
           set -euo pipefail
-          # package.json "files": ["dist"] — publish the built artifacts from the previous step.
-          npm publish --access restricted
+          # package.json name is @b4moss/harenohi for npmjs. Rewrite only for this
+          # Gitea publish so consumers of the internal scope keep @b4m/harenohi.
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            pkg.name = '@b4m/harenohi';
+            delete pkg.publishConfig;
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('temporary name for internal publish:', pkg.name);
+          "
+          npm publish --access restricted --registry "${INTERNAL_REGISTRY}"

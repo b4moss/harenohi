@@ -14,7 +14,7 @@ timestamp: 2026-10-20
 
 ## 含む機能
 
-- `@b4m/harenohi` の `package.json`（publishConfig は社内 registry）
+- `@b4moss/harenohi` の `package.json`（publishConfig は社内 registry）
 - TypeScript / テストランナー / Lint の最小構成
 - ESM + 型定義を出すビルド設定の骨格
 - 既存の `.devcontainer` / `.npmrc` で開発できること
@@ -22,13 +22,13 @@ timestamp: 2026-10-20
 ## 受け入れ条件
 
 - 空でもテストと型チェックが通る
-- パッケージ名が `@b4m/harenohi`
+- パッケージ名が `@b4moss/harenohi`
 - ルート README と `docs/` から方針・roadmap が辿れる
 
 ## 依存関係
 
 - 前提なし（本リポ最初の実装マイルストーン）
-- 参照: `kohki/shikata-kohki-life`（移植は v0.2.0）
+- 参照: 先行する個人カレンダー実装（移植は v0.2.0）
 
 ## やらぬこと
 

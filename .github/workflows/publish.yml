@@ -1,0 +1,88 @@
+# Publish @b4moss/harenohi to npmjs.org (Trusted Publishing + provenance).
+# Trigger: plain SemVer tags vX.Y.Z only (no workflow_dispatch — keeps Trusted Publisher match stable).
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          # Release publishes must not depend on a stale npm cache.
+
+      - name: Require npm >= 11.5.1 (Trusted Publishing)
+        run: |
+          set -euo pipefail
+          NPM_VERSION="$(npm --version)"
+          echo "npm version: ${NPM_VERSION}"
+          node -e "
+            const [maj, min, pat] = process.argv[1].split('.').map(Number);
+            const ok = maj > 11 || (maj === 11 && (min > 5 || (min === 5 && pat >= 1)));
+            if (!ok) {
+              console.error('npm >= 11.5.1 required for Trusted Publishing; got', process.argv[1]);
+              process.exit(1);
+            }
+          " "${NPM_VERSION}"
+
+      - name: Verify tag matches package.json and src/version.ts
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          SRC_VERSION="$(node -p "const fs=require('fs'); const t=fs.readFileSync('src/version.ts','utf8'); const m=t.match(/VERSION\\s*=\\s*'([^']+)'/); if(!m) throw new Error('VERSION not found in src/version.ts'); m[1]")"
+          echo "tag version=${VERSION}"
+          echo "package.json version=${PKG_VERSION}"
+          echo "src/version.ts VERSION=${SRC_VERSION}"
+          if [[ "${PKG_VERSION}" != "${VERSION}" ]]; then
+            echo "::error::package.json version (${PKG_VERSION}) does not match tag (${VERSION})"
+            exit 1
+          fi
+          if [[ "${SRC_VERSION}" != "${VERSION}" ]]; then
+            echo "::error::src/version.ts VERSION (${SRC_VERSION}) does not match tag (${VERSION})"
+            exit 1
+          fi
+
+      - name: Install, lint, typecheck, test, build
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run lint
+          npm run typecheck
+          npm test
+          npm run build
+
+      - name: npm pack --dry-run
+        run: npm pack --dry-run
+
+      - name: Publish to npmjs.org
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          if npm view "${NAME}@${VERSION}" version >/dev/null 2>&1; then
+            echo "Skip publish: ${NAME}@${VERSION} already on npm"
+            exit 0
+          fi
+          # First publish may use NPM_TOKEN (granular). Later releases use OIDC
+          # Trusted Publishing when the secret is removed.
+          npm publish --access public --provenance

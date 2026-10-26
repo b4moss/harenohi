@@ -9,6 +9,10 @@ function readWorkflow(name: string): string {
   return readFileSync(join(root, '.gitea/workflows', name), 'utf8')
 }
 
+function readGithubWorkflow(name: string): string {
+  return readFileSync(join(root, '.github/workflows', name), 'utf8')
+}
+
 /** トップレベルキー（行頭）から次のトップレベルキー手前まで */
 function topLevelBlock(yml: string, key: string): string {
   const lines = yml.split('\n')
@@ -130,5 +134,50 @@ describe('fetch-holiday-csv workflow contract', () => {
     expect(onBlock).toMatch(/^ {2}schedule:/m)
     expect(onBlock).toMatch(/^ {2}workflow_dispatch:/m)
     expect(onBlock).not.toMatch(/pull_request:/)
+  })
+})
+
+describe('GitHub publish.yml contract (npmjs)', () => {
+  const yml = readGithubWorkflow('publish.yml')
+  const onBlock = topLevelBlock(yml, 'on')
+  const permissions = topLevelBlock(yml, 'permissions')
+  const job = jobBlock(yml, 'publish')
+
+  it('TC-PUB-01: tag push trigger is plain vX.Y.Z only', () => {
+    expect(onBlock).toMatch(/tags:/)
+    expect(onBlock).toMatch(/v\[0-9\]\+\.\[0-9\]\+\.\[0-9\]\+/)
+    expect(onBlock).not.toMatch(/workflow_dispatch/)
+  })
+
+  it('TC-PUB-02: permissions include id-token: write and contents: read', () => {
+    expect(permissions).toMatch(/^ {2}contents: read$/m)
+    expect(permissions).toMatch(/^ {2}id-token: write$/m)
+  })
+
+  it('TC-PUB-03: verifies tag matches package.json and src/version.ts', () => {
+    expect(yml).toMatch(/package\.json version/)
+    expect(yml).toMatch(/src\/version\.ts/)
+    expect(yml).toMatch(/does not match tag/)
+  })
+
+  it('TC-PUB-04: publishes with --access public (and provenance)', () => {
+    expect(yml).toMatch(/npm publish --access public --provenance/)
+  })
+
+  it('TC-PUB-05: ubuntu-latest, environment npm-publish, Node 24 registry-url', () => {
+    expect(job).toMatch(/^ {4}runs-on: ubuntu-latest$/m)
+    expect(job).toMatch(/^ {4}environment: npm-publish$/m)
+    expect(yml).toMatch(/node-version: ['"]24['"]/)
+    expect(yml).toMatch(/registry-url: ['"]https:\/\/registry\.npmjs\.org['"]/)
+  })
+})
+
+describe('Gitea npm-publish.yml contract (internal @b4m coexistence)', () => {
+  const yml = readWorkflow('npm-publish.yml')
+
+  it('TC-PUB-GITEA-01: temporarily rewrites name to @b4m/harenohi and uses --registry', () => {
+    expect(yml).toMatch(/@b4m\/harenohi/)
+    expect(yml).toMatch(/--registry/)
+    expect(yml).toMatch(/temporary name for internal publish/)
   })
 })

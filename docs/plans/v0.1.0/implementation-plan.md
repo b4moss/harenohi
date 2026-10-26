@@ -10,12 +10,12 @@ timestamp: 2026-10-20
 
 ## 目的
 
-`@b4m/harenohi` の TypeScript パッケージ器を用意する。祝日演算は含めない。
+`@b4moss/harenohi` の TypeScript パッケージ器を用意する。祝日演算は含めない。
 
 ## 対象ファイル・モジュール構成（案）
 
 ```
-package.json          # name: @b4m/harenohi, type: module, exports + types
+package.json          # name: @b4moss/harenohi, type: module, exports + types
 tsconfig.json
 vitest.config.ts      # または node:test。DOM 不要
 src/
@@ -26,7 +26,7 @@ src/
 .npmrc                # 既存
 ```
 
-`publishConfig.registry` は `https://git.b4m.jp/api/packages/b4m-packages/npm/`（D-00）。
+`publishConfig` は npmjs 向けに `{ "access": "public" }`（社内 registry は `.npmrc` / Gitea workflow の `--registry`。D-00 / D-8）。
 
 ## API / 型（本版）
 
@@ -58,7 +58,7 @@ export {}
 | 受け入れ（[README](README.md)） | 本計画での担保 |
 |--------------------------------|----------------|
 | 空でもテストと型チェックが通る | ステップ 2–3 |
-| パッケージ名 `@b4m/harenohi` | `package.json` name |
+| パッケージ名 `@b4moss/harenohi` | `package.json` name |
 | docs が辿れる | 既存 docs + ルート README |
 
 ## 依存
