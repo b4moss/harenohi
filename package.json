@@ -1,6 +1,6 @@
 {
   "name": "@b4moss/harenohi",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "祝日演算ライブラリ（当面は日本の祝日）",
   "type": "module",
   "license": "MIT",

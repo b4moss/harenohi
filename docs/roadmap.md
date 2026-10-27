@@ -16,7 +16,7 @@ timestamp: 2026-10-26
 - PO 決定（2026-10-20）反映済み
 - **npmjs.org 公開を決定**（2026-10-26、こうきさん）。準備: `.github/workflows/publish.yml`、パッケージ名 `@b4moss/harenohi`
 - 社内 Gitea Packages（`@b4m/harenohi`）は当面併存（D-8）
-- **次の実装マイルストーン**: [v1.0.0](plans/v1.0.0/)（API 安定）および初版 npmjs 公開（タグ後。初版のタグは未決: 既存 `v0.4.0` は `publish.yml` 導入前のコミットを指すため、おすすめは patch を上げて `v0.4.1`。GitHub `b4moss/harenohi` と Environment `npm-publish` は作成済み、push mirror は未設定。詳細は [specs/npm-publish.md](specs/npm-publish.md) の「公開準備の状況」）
+- **次の実装マイルストーン**: [v1.0.0](plans/v1.0.0/)（API 安定）および初版 npmjs 公開（タグ後。**決定（2026-10-26）：案 a、0.4.1 で初回公開**。既存 `v0.4.0` は `publish.yml` 導入前のコミットを指すため。GitHub `b4moss/harenohi` と Environment `npm-publish` は作成済み、push mirror は未設定。詳細は [specs/npm-publish.md](specs/npm-publish.md) の「公開準備の状況」）
 
 ## バージョニング方針
 
@@ -31,7 +31,8 @@ timestamp: 2026-10-26
 | **v0.1.0** | 完了 | パッケージ開発の器 | [plans/v0.1.0/](plans/v0.1.0/) |
 | **v0.2.0** | 完了 | 日本祝日演算の移植 | [plans/v0.2.0/](plans/v0.2.0/) |
 | **v0.3.0** | 完了 | CSV / オーバーライド / Actions | [plans/v0.3.0/](plans/v0.3.0/) |
-| **v0.4.0** | 完了（現行タグ） | 表示用英名・現行機能セット。npmjs 初版候補 | — |
+| **v0.4.0** | 完了（タグ済み） | 表示用英名・現行機能セット | — |
+| **v0.4.1** | 準備中 | npmjs.org 初回公開（案 a。機能変更なし） | [specs/npm-publish.md](specs/npm-publish.md) |
 | **v1.0.0** | 未着手 | API 安定・配信 | [plans/v1.0.0/](plans/v1.0.0/) |
 | **After-v1.0.0** | 未割当 | 他文化圏 | [unscheduled/other-locales.md](plans/unscheduled/other-locales.md) |
 
@@ -76,6 +77,15 @@ timestamp: 2026-10-26
 | **受け入れ** | タグ `v0.4.0` と `package.json` / `src/version.ts` が一致。公開前確認は準備 PR 本文 |
 | **依存** | v0.3.0 |
 
+### v0.4.1 — npmjs 初回公開
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | npmjs.org への初回公開（案 a） |
+| **含む機能** | 版揃えのみ。公開名 `@b4moss/harenohi`、MIT、GitHub Actions `publish.yml`。機能変更なし |
+| **受け入れ** | タグ `v0.4.1` と `package.json` / `src/version.ts` が一致。公開手順は [npm-publish](specs/npm-publish.md) |
+| **依存** | v0.4.0 |
+
 ### v1.0.0 — 安定・配信
 
 | 項目 | 内容 |
@@ -83,7 +93,7 @@ timestamp: 2026-10-26
 | **目的** | 日本祝日ライブラリとして利用可能な品質で出す |
 | **含む機能** | API・型の安定、ドキュメント、npmjs / 社内 publish（[npm-publish](specs/npm-publish.md)） |
 | **受け入れ** | [plans/v1.0.0/README.md](plans/v1.0.0/README.md) の受け入れ一覧。カバレッジ目安 50% |
-| **依存** | v0.4.0 |
+| **依存** | v0.4.1 |
 | **詳細** | [plans/v1.0.0/](plans/v1.0.0/) |
 
 ---
@@ -92,7 +102,7 @@ timestamp: 2026-10-26
 
 | 議題 | 状態 | 正本 |
 |------|------|------|
-| npm スコープ・公開時期 | **決定**（2026-10-20）。**npmjs 公開を決定**（2026-10-26、こうきさん） | [open-questions.md](plans/v1.0.0/open-questions.md) U-01 / U-06 |
+| npm スコープ・公開時期 | **決定**（2026-10-20）。**npmjs 公開を決定**（2026-10-26、こうきさん）。**初版タグは案 a・0.4.1**（2026-10-26） | [open-questions.md](plans/v1.0.0/open-questions.md) U-01 / U-06 |
 | 開始年 1948・範囲外は空＋`onWarning?` | **決定**（N-H1 含む） | [open-questions](plans/v1.0.0/open-questions.md) U-02 / [new-open-questions](plans/unscheduled/new-open-questions.md) |
 | CSV 最古 1955・1948〜1954 は演算・override は 1955〜 | **決定**（N-D1。2026-10-20 PO） | [new-open-questions](plans/unscheduled/new-open-questions.md) / [data-sources](plans/v1.0.0/data-sources.md) |
 | 振替・ロケール・CSV は PR マージ | **決定** | 同上 U-04 / U-07 / U-09 |
