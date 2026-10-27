@@ -1,11 +1,13 @@
 # Publish @b4moss/harenohi to npmjs.org (Trusted Publishing + provenance).
-# Trigger: plain SemVer tags vX.Y.Z only (no workflow_dispatch — keeps Trusted Publisher match stable).
+# Triggers: plain SemVer tag push vX.Y.Z, or workflow_dispatch with --ref vX.Y.Z
+# (mirrored tag pushes via `git push --mirror` do not create tag-push Events on GitHub).
 name: publish
 
 on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -40,6 +42,22 @@ jobs:
               process.exit(1);
             }
           " "${NPM_VERSION}"
+
+      - name: Require plain SemVer tag ref (vX.Y.Z)
+        run: |
+          set -euo pipefail
+          # Tag push and `gh workflow run --ref vX.Y.Z` both set github.ref to
+          # refs/tags/vX.Y.Z (event_name is workflow_dispatch for the latter).
+          # Branch refs must fail so we never publish from a non-tag dispatch.
+          echo "event=${GITHUB_EVENT_NAME} ref=${GITHUB_REF} ref_name=${GITHUB_REF_NAME}"
+          if [[ "${GITHUB_REF}" != refs/tags/* ]]; then
+            echo "::error::Ref must be a tag (refs/tags/vX.Y.Z). Got ${GITHUB_REF} (event=${GITHUB_EVENT_NAME}). Use: gh workflow run publish.yml --ref vX.Y.Z -R b4moss/harenohi"
+            exit 1
+          fi
+          if [[ ! "${GITHUB_REF_NAME}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Tag must be plain SemVer vX.Y.Z (no suffix). Got ${GITHUB_REF_NAME}"
+            exit 1
+          fi
 
       - name: Verify tag matches package.json and src/version.ts
         run: |

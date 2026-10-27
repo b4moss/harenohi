@@ -73,6 +73,8 @@ PO レビューにより **2026-10-20** に確定（U-05 は初期方針どお�
 
 **追記（2026-10-26、こうきさん）: npmjs 公開を決定。** `@b4moss/harenohi` として npmjs.org へ出す（D-5=a）。社内レジストリは当面残す（D-8=a）。社内への公開がタグでいっしょに動いても構わない。NOTICE は出典が書いてあれば問題なく、D-10 の「要確認」は解消（いずれも 2026-10-26 追加決定）。既存タグ `v0.4.0` は `publish.yml` 導入前を指すため、**決定（2026-10-26）：案 a、0.4.1 で初回公開**（[npm-publish.md](../../specs/npm-publish.md) の「公開準備の状況」）。
 
+**追記（2026-10-27）:** GitHub push mirror（`git push --mirror`）は tag push イベントを起こさない。npmjs の `publish.yml` は `workflow_dispatch` を付け、ミラー後に `gh workflow run publish.yml --ref vX.Y.Z -R b4moss/harenohi` で起動する。`0.4.1` は社内のみ公開済みのため、npmjs 向けは `0.4.2` で揃える。
+
 ## U-07 ロケール引数 — 決定済み（2026-10-20 PO）
 
 | 案 | 内容 |

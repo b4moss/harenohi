@@ -65,7 +65,7 @@ timestamp: 2026-10-26
 | 参照実装 | 先行する個人カレンダー実装の祝日ユーティリティ |
 | 配布 | `@b4moss/harenohi`（npmjs.org）。社内は当面 `@b4m/harenohi` 併存（[specs/npm-publish.md](specs/npm-publish.md)） |
 | レジストリ設定 | 社内消費時はルート [`.npmrc`](../.npmrc)（トークンは `${PACKAGE_REGISTRY_TOKEN}`）。ホスト名は環境依存 |
-| publish | plain `vX.Y.Z` タグ（GitHub `publish.yml` / Gitea `npm-publish.yml`） |
+| publish | plain `vX.Y.Z` タグ（Gitea `npm-publish.yml`）。npmjs はミラー後に `gh workflow run publish.yml --ref vX.Y.Z -R b4moss/harenohi`（[specs/npm-publish.md](specs/npm-publish.md)） |
 | 開発環境 | [`.devcontainer/`](../.devcontainer/)（Node 24） |
 | テスト | 憲章 TDD・氷山パターン。単体を厚め。E2E 不要 |
 
@@ -77,7 +77,8 @@ timestamp: 2026-10-26
 | v0.2.0 | 日本祝日演算の移植・単体テスト |
 | v0.3.0 | CSV 取り込み・オーバーライド・Actions（PR 作成） |
 | v0.4.0 | 表示用英名・現行機能セット |
-| v0.4.1 | npmjs.org 初回公開（案 a。機能変更なし） |
+| v0.4.1 | npmjs.org 初回公開の版揃え（案 a。社内のみ公開） |
+| v0.4.2 | npmjs `workflow_dispatch` 経路（ミラーが tag push を発火しないため） |
 | v1.0.0 | API 安定・配信可能な日本祝日ライブラリ |
 | After-v1.0.0 | 他文化圏 |
 

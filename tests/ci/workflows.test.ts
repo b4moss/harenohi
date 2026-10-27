@@ -143,10 +143,10 @@ describe('GitHub publish.yml contract (npmjs)', () => {
   const permissions = topLevelBlock(yml, 'permissions')
   const job = jobBlock(yml, 'publish')
 
-  it('TC-PUB-01: tag push trigger is plain vX.Y.Z only', () => {
+  it('TC-PUB-01: tag push vX.Y.Z and workflow_dispatch (manual after mirror)', () => {
     expect(onBlock).toMatch(/tags:/)
     expect(onBlock).toMatch(/v\[0-9\]\+\.\[0-9\]\+\.\[0-9\]\+/)
-    expect(onBlock).not.toMatch(/workflow_dispatch/)
+    expect(onBlock).toMatch(/^ {2}workflow_dispatch:/m)
   })
 
   it('TC-PUB-02: permissions include id-token: write and contents: read', () => {
@@ -155,6 +155,8 @@ describe('GitHub publish.yml contract (npmjs)', () => {
   })
 
   it('TC-PUB-03: verifies tag matches package.json and src/version.ts', () => {
+    expect(yml).toMatch(/Require plain SemVer tag ref/)
+    expect(yml).toMatch(/refs\/tags\//)
     expect(yml).toMatch(/package\.json version/)
     expect(yml).toMatch(/src\/version\.ts/)
     expect(yml).toMatch(/does not match tag/)

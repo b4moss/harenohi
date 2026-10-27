@@ -26,7 +26,7 @@ timestamp: 2026-10-22
 
 ## npm 公開
 
-- npmjs.org: [`.github/workflows/publish.yml`](../../.github/workflows/publish.yml)（`vX.Y.Z` タグ、`id-token: write`、environment `npm-publish`）
+- npmjs.org: [`.github/workflows/publish.yml`](../../.github/workflows/publish.yml)（`vX.Y.Z` タグ push または `workflow_dispatch`＋`--ref vX.Y.Z`、`id-token: write`、environment `npm-publish`、`--provenance`）。ミラー（`git push --mirror`）は tag push イベントを起こさないため、npmjs は手動 dispatch が正規経路（決定 2026-10-27）
 - 社内 Gitea Packages: [`.gitea/workflows/npm-publish.yml`](../../.gitea/workflows/npm-publish.yml)（name を一時的に `@b4m/harenohi` に書き換え）
 - 詳細: [npm-publish.md](npm-publish.md)
 
